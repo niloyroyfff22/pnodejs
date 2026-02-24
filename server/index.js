@@ -1,24 +1,26 @@
-const http = require("http");
+const express = require("express");
+const path = require("path");
+
+
+const app = express();
+
+app.use(express.json());
+
+// Example API
+app.get("/api/hello", (req, res) => {
+  res.json({ message: "Hello from Node + Express!" });
+});
+app.get("/kk", (req, res) => {
+  res.json({ message: "Hello from Node + Express!" });
+});
+
+// Serve frontend in production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "client/dist")));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client/dist/index.html"));
+  });
+}
 
 const PORT = process.env.PORT || 3000;
-
-const server = http.createServer((req, res) => {
-  if (req.url === "/" && req.method === "GET") {
-    res.writeHead(200, { "Content-Type": "text/plain" });
-    res.end("4040 Server is running kala nai keno");
-  }
-
-  else if (req.url === "/api/hello" && req.method === "GET") {
-    res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ message: "Hello from Node.js!" }));
-  }
-
-  else {
-    res.writeHead(404, { "Content-Type": "text/plain" });
-    res.end("404 Not Found niloy");
-  }
-});
-
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
