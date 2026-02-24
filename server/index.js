@@ -5,7 +5,7 @@ const PORT = process.env.PORT || 3000;
 const server = http.createServer((req, res) => {
   if (req.url === "/" && req.method === "GET") {
     res.writeHead(200, { "Content-Type": "text/plain" });
-    res.end("Server is running  Nikhil puja");
+    res.end("Server is running kala");
   }
 
   else if (req.url === "/api/hello" && req.method === "GET") {
